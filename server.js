@@ -64,6 +64,32 @@ const addDept = () => {
     });
 }
 
+const addRole = () => {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'newRole',
+            message: 'What is the name of the new role?'
+        },
+        {
+            type: 'input',
+            name: 'roleSal',
+            message: 'What is the salary agreed upon for this new role?'
+        },
+        {
+            type: 'input',
+            name: 'roleDept',
+            message: 'What is the department id associated with this role?'
+        },
+    ])
+    .then((responses) => {
+        db.query(`INSERT INTO role (title, salary, department_id) VALUES ("${responses.newRole}", ${responses.roleSal}, ${responses.roleDept});`, function (err, results) {
+            console.log('New role added!', results);
+            cliResponse();
+        });
+    })
+}
+
 
 const cliResponse = () => {
     inquirer.prompt([
@@ -95,10 +121,13 @@ const cliResponse = () => {
                 cliResponse();
             } else if (responses.deptChoice === 'Add a department') {
                 addDept();
-
+                return
+            } else if (responses.deptChoice === 'Add a role') {
+                addRole();
+                return
             } else {
                 console.log('Something has gone terribly wrong me lord')
-
+                cliResponse();
             }
 
         })
