@@ -90,6 +90,38 @@ const addRole = () => {
     })
 }
 
+const addEmpl = () => {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'firstName',
+            message: 'What is the new employees first name?'
+        },
+        {
+            type: 'input',
+            name: 'lastName',
+            message: 'What is the new employees last name?'
+        },
+        {
+            type: 'input',
+            name: 'empRole',
+            message: 'What is the new employees role id?'
+        },
+        {
+            type: 'input',
+            name: 'manager',
+            message: 'If this employee is not a manager please input the corresponding manager id?'
+        },
+    ])
+    .then((responses) => {
+        db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("${responses.firstName}", "${responses.lastName}", ${responses.empRole}, ${responses.manager});`, function (err, results) {
+            console.log("New employee added!", results);
+            cliResponse();
+            
+        });
+    })
+}
+
 
 const cliResponse = () => {
     inquirer.prompt([
@@ -124,6 +156,9 @@ const cliResponse = () => {
                 return
             } else if (responses.deptChoice === 'Add a role') {
                 addRole();
+                return
+            } else if (responses.deptChoice === 'Add an employee') {
+                addEmpl();
                 return
             } else {
                 console.log('Something has gone terribly wrong me lord')
