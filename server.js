@@ -48,6 +48,12 @@ const viewEmpl = () => {
     });
 }
 
+const joinEmpl = () => {
+    db.query("",function (err, results) {
+        console.table("This is the employee table", results);
+    });
+}
+
 const addDept = () => {
     inquirer.prompt([
         {
