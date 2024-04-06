@@ -49,7 +49,7 @@ const viewEmpl = () => {
 }
 
 const joinEmpl = () => {
-    db.query("",function (err, results) {
+    db.query("", function (err, results) {
         console.table("This is the employee table", results);
     });
 }
@@ -62,12 +62,12 @@ const addDept = () => {
             message: 'What is the name of the new department?'
         },
     ])
-    .then((response) => {
-        db.query(`INSERT INTO department (name) VALUES ("${response.newDept}");`, function (err, results) {
-            console.log('New department added!', results);
-            cliResponse();
+        .then((response) => {
+            db.query(`INSERT INTO department (title) VALUES ("${response.newDept}");`, function (err, results) {
+                console.log('New department added!', results);
+                cliResponse();
+            });
         });
-    });
 }
 
 const addRole = () => {
@@ -88,12 +88,12 @@ const addRole = () => {
             message: 'What is the department id associated with this role?'
         },
     ])
-    .then((responses) => {
-        db.query(`INSERT INTO role (title, salary, department_id) VALUES ("${responses.newRole}", ${responses.roleSal}, ${responses.roleDept});`, function (err, results) {
-            console.log('New role added!', results);
-            cliResponse();
-        });
-    })
+        .then((responses) => {
+            db.query(`INSERT INTO role (title, salary, department_id) VALUES ("${responses.newRole}", ${responses.roleSal}, ${responses.roleDept});`, function (err, results) {
+                console.log('New role added!', results);
+                cliResponse();
+            });
+        })
 }
 
 const addEmpl = () => {
@@ -116,16 +116,16 @@ const addEmpl = () => {
         {
             type: 'input',
             name: 'manager',
-            message: 'If this employee is not a manager please input the corresponding manager id?'
+            message: "Enter the employee id of the new employee's manager?(enter NULL if the new employee is a manager)"
         },
     ])
-    .then((responses) => {
-        db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("${responses.firstName}", "${responses.lastName}", ${responses.empRole}, ${responses.manager});`, function (err, results) {
-            console.log("New employee added!", results);
-            cliResponse();
-            
-        });
-    })
+        .then((responses) => {
+            db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("${responses.firstName}", "${responses.lastName}", ${responses.empRole}, ${responses.manager});`, function (err, results) {
+                console.log("New employee added!", results);
+                cliResponse();
+
+            });
+        })
 }
 
 
